@@ -1,0 +1,28 @@
+module "wiz_cluster" {
+  source = "https://wizio-public.s3.us-east-2.amazonaws.com/deployment-v2/azure/wiz-azure-outpost-bring-your-own-network-cluster-terraform-module.zip"
+
+  subscription_id       = "sub"
+  resource_group_region = "eastus"
+  resource_group_name   = "wiz-outpost-eastus"
+  proxy_setup           = "forward"
+}
+
+output "subscription_id" {
+  value = module.wiz_cluster.subscription_id
+}
+
+output "resource_group_name" {
+  value = module.wiz_cluster.resource_group_name
+}
+
+output "vnet_id" {
+  value = module.wiz_cluster.vnet_id
+}
+
+output "subnet_id" {
+  value = module.wiz_cluster.subnet_id
+}
+
+output "proxy_ip" {
+  value = module.wiz_cluster.proxy_ip
+}
