@@ -7,7 +7,7 @@ provider "azurerm" {
 data "azurerm_client_config" "current" {
 }
 
-# Create resource group using var.resource_group_name and var.resource_group_region
+# Create Resource Group using var.resource_group_name and var.resource_group_region
 resource "azurerm_resource_group" "wiz_aks" {
   count    = var.use_existing_resource_group ? 0 : 1
   name     = var.resource_group_name
