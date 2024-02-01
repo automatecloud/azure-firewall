@@ -1,5 +1,5 @@
 output "subscription_id" {
-  value = data.azurerm_client_config.current.subscription_id
+  value = var.subscription_id
 }
 
 output "resource_group_name" {
