@@ -1,5 +1,5 @@
 module "wiz_firewall" {
-  source                = "https://github.com/automatecloud/azure-firewall/azure-firewall-for-aks"
+  source                = "git::https://github.com/automatecloud/azure-firewall/azure-firewall-for-aks"
   subscription_id       = "sub"
   resource_group_region = "eastus"
   resource_group_name   = "wiz-outpost-eastus"
