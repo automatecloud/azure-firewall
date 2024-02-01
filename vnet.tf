@@ -22,6 +22,7 @@ locals {
   vnet_resource_group_name = var.use_existing_resource_group ? var.resource_group_name : "${var.resource_group_name}-vnet"
 }
 
+# Create resource group using local.vnet_resource_group_name and var.resource_group_region
 resource "azurerm_resource_group" "wiz_aks_vnet" {
   count    = var.use_existing_resource_group ? 0 : 1
   name     = local.vnet_resource_group_name
