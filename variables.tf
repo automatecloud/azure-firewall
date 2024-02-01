@@ -14,3 +14,9 @@ variable "resource_group_name" {
 variable "resource_group_region" {
   type = string
 }
+
+variable "azure_china" {
+  type        = bool
+  default     = false
+  description = "Set to true if deploying to Azure China Cloud"
+}
