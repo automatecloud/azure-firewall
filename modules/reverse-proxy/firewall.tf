@@ -200,6 +200,19 @@ resource "azurerm_firewall_policy_rule_collection_group" "reverse_proxy_rcp" {
         port = 443
       }
     }
+    rule {
+      name              = "WizSensor"
+      source_addresses  = ["*"]
+      destination_fqdns = ["wiziosensor.azurecr.io"]
+      protocols {
+        type = "Http"
+        port = 80
+      }
+      protocols {
+        type = "Https"
+        port = 443
+      }
+    }
   }
 
   network_rule_collection {
@@ -244,6 +257,14 @@ resource "azurerm_firewall_policy_rule_collection_group" "reverse_proxy_rcp" {
       source_addresses      = ["*"]
       destination_ports     = ["443"]
       destination_addresses = ["*"] # replace with Cluster's API server public IP
+      protocols             = ["TCP"]
+    }
+
+    rule {
+      name                  = "wiziopublic"
+      source_addresses      = ["*"]
+      destination_ports     = ["443"]
+      destination_addresses = ["wiziopublic.azurecr.io","wizio.azurecr.io"]
       protocols             = ["TCP"]
     }
   }
