@@ -27,7 +27,6 @@
 # wizio.azurecr.io                                HTTP:80,HTTPS:443
 # *.blob.core.windows.net                         HTTP:80,HTTPS:443
 # *datadoghq.com                                  HTTPS:10516,HTTPS:443
-# *launchdarkly.com                               HTTP:80,HTTPS:443
 # *.s3.<backend region aws region>.amazonaws.com  HTTPS:443 (test-diskanalyzer-results-source-us-east-2.s3.us-east-2.amazonaws.com:443)
 
 resource "azurerm_public_ip" "proxy_public_ip" {
@@ -189,15 +188,6 @@ resource "azurerm_firewall_policy_rule_collection_group" "reverse_proxy_rcp" {
       protocols {
         type = "Https"
         port = 10516
-      }
-    }
-    rule {
-      name              = "launchdarkly"
-      source_addresses  = ["*"]
-      destination_fqdns = ["*launchdarkly.com"]
-      protocols {
-        type = "Https"
-        port = 443
       }
     }
     rule {
