@@ -35,8 +35,24 @@ variable "proxy_setup" {
   }
 }
 
+variable "subnet_aks_cidr" {
+  type    = string
+  default = "10.1.0.0/18"
+}
+
+variable "subnet_public_cidr" {
+  type    = string
+  default = "10.1.64.0/24"
+}
+
 variable "azure_china" {
   type        = bool
   default     = false
   description = "Set to true if deploying to Azure China Cloud"
+}
+
+variable "aks_subnet_private_endpoint_network_policies_enabled" {
+  type = bool
+  default = true
+  description = "Set to false when installing an AKS private cluster, https://learn.microsoft.com/en-us/azure/private-link/disable-private-endpoint-network-policy" 
 }

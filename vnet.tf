@@ -49,3 +49,33 @@ resource "azurerm_virtual_network" "wiz_aks" {
     environment = "Terraform BYON with firewall"
   }
 }
+
+locals {
+  subnet_service_endpoints = concat(
+    [
+      "Microsoft.KeyVault",
+      "Microsoft.ServiceBus",
+      "Microsoft.Storage.Global"
+    ],
+    var.azure_china ? [] : ["Microsoft.AzureActiveDirectory", "Microsoft.ContainerRegistry"]
+  )
+}
+
+resource "azurerm_subnet" "wiz_aks_subnet" {
+  name                                      = "${var.vnet_name}AKSSubnet"
+  virtual_network_name                      = var.vnet_name
+  address_prefixes                          = [var.subnet_aks_cidr]
+  resource_group_name                       = local.vnet_resource_group_name
+  service_endpoints                         = local.subnet_service_endpoints
+  private_endpoint_network_policies_enabled = var.aks_subnet_private_endpoint_network_policies_enabled
+  depends_on                                = [azurerm_virtual_network.wiz_aks]
+}
+
+resource "azurerm_subnet" "wiz_aks_public" {
+  count                = local.is_proxy ? 1 : 0
+  name                 = var.proxy_setup == "reverse" ? "AzureFirewallSubnet" : "${var.vnet_name}PublicSubnet"
+  virtual_network_name = var.vnet_name
+  address_prefixes     = [var.subnet_public_cidr]
+  resource_group_name  = local.vnet_resource_group_name
+  depends_on           = [azurerm_virtual_network.wiz_aks]
+}
