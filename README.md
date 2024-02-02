@@ -3,7 +3,7 @@
 
 module "wiz_firewall" {
   source                = "git::https://github.com/automatecloud/azure-firewall"
-  subscription_id       = "41167f47-9a2f-471f-b9a5-183bb5c79e49"
+  subscription_id       = "sub"
   resource_group_region = "eastus"
   resource_group_name   = "wiz-outpost-eastus"
   proxy_setup           = "reverse"
