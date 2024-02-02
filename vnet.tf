@@ -14,7 +14,7 @@ resource "azurerm_resource_group" "wiz_aks" {
   location = var.resource_group_region
 
   tags = {
-    environment = "Terraform BYON with proxy server"
+    environment = "Terraform BYON with firewall"
   }
 }
 
@@ -29,6 +29,23 @@ resource "azurerm_resource_group" "wiz_aks_vnet" {
   location = var.resource_group_region
 
   tags = {
-    environment = "Terraform BYON with proxy server"
+    environment = "Terraform BYON with firewall"
+  }
+}
+
+locals {
+  is_proxy = var.proxy_setup != "none"
+}
+
+# Create VPC with subnet using var.vpc_name
+resource "azurerm_virtual_network" "wiz_aks" {
+  name                = var.vnet_name
+  address_space       = [var.vnet_cidr]
+  location            = var.resource_group_region
+  resource_group_name = local.vnet_resource_group_name
+  depends_on          = [azurerm_resource_group.wiz_aks_vnet]
+
+  tags = {
+    environment = "Terraform BYON with firewall"
   }
 }
