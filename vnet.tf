@@ -79,3 +79,17 @@ resource "azurerm_subnet" "wiz_aks_public" {
   resource_group_name  = local.vnet_resource_group_name
   depends_on           = [azurerm_virtual_network.wiz_aks]
 }
+
+# Create firewall reverse proxy
+module "reverse_proxy" {
+  count  = var.proxy_setup == "reverse" ? 1 : 0
+  source = "./modules/reverse-proxy"
+
+  resource_group_region = var.resource_group_region
+  resource_group_name   = local.vnet_resource_group_name
+  subnet_id             = azurerm_subnet.wiz_aks_public[0].id
+  aks_subnet_id         = azurerm_subnet.wiz_aks_subnet.id
+  name_prefix           = var.vnet_name
+
+  depends_on = [azurerm_virtual_network.wiz_aks]
+}
