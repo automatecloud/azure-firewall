@@ -13,3 +13,8 @@ output "vnet_id" {
 output "vnet_cidr" {
   value = azurerm_virtual_network.wiz_aks.address_space[0]
 }
+
+output "subnet_id" {
+  description = "Bring-Your-Own-Network subnet ID"
+  value       = azurerm_subnet.wiz_aks_subnet.id
+}
