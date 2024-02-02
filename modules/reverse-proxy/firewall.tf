@@ -38,7 +38,7 @@ resource "azurerm_public_ip" "proxy_public_ip" {
   depends_on          = [var.subnet_id]
 
   tags = {
-    environment = "Terraform BYON with proxy server"
+    environment = "Terraform BYON with firewall"
   }
 }
 
@@ -191,7 +191,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "reverse_proxy_rcp" {
       }
     }
     rule {
-      name              = "resutls-bucket"
+      name              = "results-bucket"
       source_addresses  = ["*"]
       destination_fqdns = ["*.s3.us-east-2.amazonaws.com"]
       # destination_fqdns = ["*.s3.<backend region aws region>.amazonaws.com"]
@@ -267,7 +267,7 @@ resource "azurerm_firewall" "reverse_proxy" {
   depends_on = [azurerm_firewall_policy_rule_collection_group.reverse_proxy_rcp]
 
   tags = {
-    environment = "Terraform BYON with proxy server"
+    environment = "Terraform BYON with firewall"
   }
 }
 
@@ -291,7 +291,7 @@ resource "azurerm_route_table" "proxy_route_table" {
   }
 
   tags = {
-    environment = "Terraform BYON with proxy server"
+    environment = "Terraform BYON with firewall"
   }
 }
 
