@@ -1,6 +1,7 @@
 # azure-firewall
  using azure firewall with UDR for AKS
 
+``````
 module "wiz_firewall" {
   source                = "git::https://github.com/automatecloud/azure-firewall"
   subscription_id       = "sub"
@@ -28,3 +29,4 @@ output "subnet_id" {
 output "proxy_ip" {
   value = module.wiz_cluster.proxy_ip
 }
+``````
